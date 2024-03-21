@@ -1,16 +1,16 @@
 import logging
 from pathlib import Path
+from train import models
 import global_options as global_options
-from train import culture_models
 
 
 def train():
 
     def train_ngram_model(input_path, model_path):
-        culture_models.train_ngram_model(input_path, model_path)
+        models.train_ngram_model(input_path, model_path)
 
     def apply_ngram_model(input_path, output_path, model_path, threshold, scoring):
-        culture_models.apply_ngram_model(
+        models.apply_ngram_model(
             input_path, output_path, model_path, threshold, scoring
         )
 
@@ -23,7 +23,9 @@ def train():
     )
     logging.log(logging.INFO, "completed training bigram model from corpus")
 
-    logging.log(logging.INFO, "applying bigram model to corpus to produce a bigrammed corpus")
+    logging.log(
+        logging.INFO, "applying bigram model to corpus to produce a bigrammed corpus"
+    )
     apply_ngram_model(
         input_path=Path(
             global_options.DATA_FOLDER, "processed", "unigram", "documents.txt"
@@ -36,7 +38,8 @@ def train():
         threshold=global_options.PHRASE_THRESHOLD,
     )
     logging.log(
-        logging.INFO, "completed applying bigram model to corpus to produce a bigrammed corpus"
+        logging.INFO,
+        "completed applying bigram model to corpus to produce a bigrammed corpus",
     )
 
     logging.log(logging.INFO, "training trigram model from bigrammed corpus")
@@ -68,7 +71,7 @@ def train():
     )
 
     logging.log(logging.INFO, "training trigram w2v model from trigrammed corpus")
-    culture_models.train_w2v_model(
+    models.train_w2v_model(
         input_path=Path(
             global_options.DATA_FOLDER, "processed", "trigram", "documents.txt"
         ),
