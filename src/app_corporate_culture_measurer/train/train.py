@@ -13,7 +13,7 @@ from train import culture_models
 
 def train():
     # train and apply a phrase model to detect 2-word phrases ----------------
-    culture_models.train_bigram_model(
+    culture_models.train_ngram_model(
         input_path=Path(
             global_options.DATA_FOLDER, "processed", "unigram", "documents.txt"
         ),
@@ -32,7 +32,7 @@ def train():
     )
 
     # train and apply a phrase model to detect 3-word phrases ----------------
-    culture_models.train_bigram_model(
+    culture_models.train_ngram_model(
         input_path=Path(
             global_options.DATA_FOLDER, "processed", "bigram", "documents.txt"
         ),

@@ -15,7 +15,7 @@ from gensim import models
 from culture import file_util
 
 
-def train_bigram_model(input_path, model_path):
+def train_ngram_model(input_path, model_path):
     """ Train a phrase model and save it to the disk. 
     
     Arguments:
