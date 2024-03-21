@@ -1,13 +1,6 @@
-import datetime
-import functools
 import logging
-import sys
 from pathlib import Path
-
-import pandas as pd
-
 import global_options as global_options
-import preprocess.parse as parse
 from train import culture_models
 
 
@@ -52,7 +45,6 @@ def train():
     )
     logging.log(logging.INFO, "completed training trigram model from bigrammed corpus")
 
-
     logging.log(logging.INFO, "training trigram w2v model from trigrammed corpus")
     culture_models.train_w2v_model(
         input_path=Path(
@@ -64,4 +56,6 @@ def train():
         workers=global_options.N_CORES,
         epochs=global_options.W2V_ITER,
     )
-    logging.log(logging.INFO, "completed training trigram w2v model from trigrammed corpus")
+    logging.log(
+        logging.INFO, "completed training trigram w2v model from trigrammed corpus"
+    )
