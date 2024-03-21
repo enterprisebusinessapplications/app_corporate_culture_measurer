@@ -1,8 +1,9 @@
 .vscode/settings.json
 .DS_Store
 __pycache__/
-data/processed/
-data/processed_backup/
+src/app_corporate_culture_measurer/data/processed
+src/app_corporate_culture_measurer/data/processed_backup
+src/app_corporate_culture_measurer/data/input_for_test/
 models/
 outputs/
 *.props

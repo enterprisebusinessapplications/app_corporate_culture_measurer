@@ -3,7 +3,7 @@ import os
 import re
 import functools
 from . import file_util
-import global_options
+import global_options as global_options
 
 
 class preprocessor(object):
