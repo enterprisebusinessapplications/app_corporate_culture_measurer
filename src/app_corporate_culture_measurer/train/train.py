@@ -8,9 +8,8 @@ import pandas as pd
 
 import global_options as global_options
 import preprocess.parse as parse
-from culture import culture_models, file_util, preprocess
+from culture import culture_models
 
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
 def train():
     # train and apply a phrase model to detect 2-word phrases ----------------
@@ -34,11 +33,15 @@ def train():
 
     # train and apply a phrase model to detect 3-word phrases ----------------
     culture_models.train_bigram_model(
-        input_path=Path(global_options.DATA_FOLDER, "processed", "bigram", "documents.txt"),
+        input_path=Path(
+            global_options.DATA_FOLDER, "processed", "bigram", "documents.txt"
+        ),
         model_path=Path(global_options.MODEL_FOLDER, "phrases", "trigram.mod"),
     )
     culture_models.file_bigramer(
-        input_path=Path(global_options.DATA_FOLDER, "processed", "bigram", "documents.txt"),
+        input_path=Path(
+            global_options.DATA_FOLDER, "processed", "bigram", "documents.txt"
+        ),
         output_path=Path(
             global_options.DATA_FOLDER, "processed", "trigram", "documents.txt"
         ),

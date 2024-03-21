@@ -10,8 +10,6 @@ import global_options as global_options
 import preprocess.parse as parse
 from culture import file_util, preprocess
 
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
-
 
 def clean_file(in_file, out_file):
     """clean the entire corpus (output from CoreNLP)

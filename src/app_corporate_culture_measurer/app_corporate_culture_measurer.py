@@ -8,6 +8,7 @@ from preprocess.clean import clean_file
 import global_options
 
 # from train.train import sequential_parse
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
 if __name__ == "__main__":
     sequential_parse()
