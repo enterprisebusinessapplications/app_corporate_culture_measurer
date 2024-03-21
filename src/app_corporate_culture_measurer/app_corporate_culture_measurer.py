@@ -43,5 +43,3 @@ if __name__ == "__main__":
 
     if aggregate_firm_scores:
         aggregate_scores()
-
-# ...

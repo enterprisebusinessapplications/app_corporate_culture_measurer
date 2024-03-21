@@ -1,12 +1,12 @@
 # app_corporate_culture_measurer
 ![build status](https://github.com/praisetompane/app_corporate_culture_measurer/actions/workflows/app_corporate_culture_measurer.yaml/badge.svg)
 
-## Introduction
+## introduction
 restructure [Measuring Corporate Culture Using Machine Learning](https://github.com/MS20190155/Measuring-Corporate-Culture-Using-Machine-Learning).
 Kai Li, Feng Mai, Rui Shen, Xinyan Yan, [__Measuring Corporate Culture Using Machine Learning__](https://academic.oup.com/rfs/advance-article-abstract/doi/10.1093/rfs/hhaa079/5869446?redirectedFrom=fulltext), _The Review of Financial Studies_, 2020; DOI:[10.1093/rfs/hhaa079](http://dx.doi.org/10.1093/rfs/hhaa079) 
 [[Available at SSRN]](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3256608)
 
-objectives:
+### objectives:
 - restructure into REST API driven application. 
 - accept aribitary corpus. 
 - generate an aribitary number of culture frameworks.
@@ -141,6 +141,7 @@ objectives:
 
 **Disclaimer**: This is still work in progress.
 ======================================================================================================================================================
+# Previous Flow:
 ## Data
 We included some example data in the `data/input/` folder. The three files are
 - `documents.txt`: Each line is a document (e.g., each earnings call). Each document needs to have line breaks remvoed. The file has no header row. 
