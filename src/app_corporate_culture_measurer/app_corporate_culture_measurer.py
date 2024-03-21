@@ -7,6 +7,8 @@ from preprocess.parse import sequential_parse
 from preprocess.clean import clean_file
 from train.train import train
 from core.create_dictionary import create_culture_dictionary
+from core.score import score
+
 import global_options
 
 # from train.train import sequential_parse
@@ -16,6 +18,7 @@ if __name__ == "__main__":
     reparse = False
     reclean = False
     retrain = False
+    regenerate_dictionary = False
 
     if reparse:
         sequential_parse()
@@ -31,6 +34,8 @@ if __name__ == "__main__":
         )
     if retrain:
         train()
+    if regenerate_dictionary:
+        create_culture_dictionary()
 
-    create_culture_dictionary()
+    score()
 # ...
