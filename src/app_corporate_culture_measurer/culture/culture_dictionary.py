@@ -26,17 +26,17 @@ def expand_words_dimension_mean(
 ):
     """For each dimensional mean vector, search for the closest n words
 
-    
+
     Arguments:
         word2vec_model {gensim.models.word2vec} -- a gensim word2vec model
         seed_words {dict[str, list]} -- seed word dict of {dimension: [words]}
-    
+
     Keyword Arguments:
         n {int} -- number of expanded words in each dimension (default: {50})
         restrict {float} -- whether to restrict the search to a fraction of most frequent words in vocab (default: {None})
         min_similarity {int} -- minimum cosine similarity to the seeds for a word to be included (default: {0})
         filter_word_set {set} -- do not include the words in this set to the expanded dictionary (default: {None})
-    
+
     Returns:
         dict[str, set] -- expanded words, a dict of {dimension: set([words])}
     """
@@ -77,7 +77,7 @@ def expand_words_dimension_mean(
 
 
 def rank_by_sim(expanded_words, seed_words, model) -> "dict[str: list]":
-    """ Rank each dim in a dictionary based on similarity to the seend words mean
+    """Rank each dim in a dictionary based on similarity to the seend words mean
     Returns: expanded_words_sorted {dict[str:list]}
     """
     expanded_words_sorted = dict()
@@ -102,7 +102,7 @@ def rank_by_sim(expanded_words, seed_words, model) -> "dict[str: list]":
 
 def write_dict_to_csv(culture_dict, file_name):
     """write the expanded dictionary to a csv file, each dimension is a column, the header includes dimension names
-    
+
     Arguments:
         culture_dict {dict[str, list[str]]} -- an expanded dictionary {dimension: [words]}
         file_name {str} -- where to save the csv file?
@@ -117,7 +117,7 @@ def read_dict_from_csv(file_name):
 
     Arguments:
         file_name {str} -- expanded dictionary file
-    
+
     Returns:
         culture_dict {dict{str: set(str)}} -- a culture dict, dim name as key, set of expanded words as value
         all_dict_words {set(str)} -- a set of all words in the dict
@@ -140,7 +140,7 @@ def read_dict_from_csv(file_name):
 
 def deduplicate_keywords(word2vec_model, expanded_words, seed_words):
     """
-    If a word cross-loads, choose the most similar dimension. Return a deduplicated dict. 
+    If a word cross-loads, choose the most similar dimension. Return a deduplicated dict.
     """
     word_counter = Counter()
 
@@ -148,7 +148,7 @@ def deduplicate_keywords(word2vec_model, expanded_words, seed_words):
         word_counter.update(list(expanded_words[dimension]))
     for dimension in seed_words:
         for w in seed_words[dimension]:
-            if w not in word2vec_model.wv.key_to_index:
+            if w not in word2vec_model.wv.key_to_index.keys():
                 seed_words[dimension].remove(w)
 
     word_counter = {k: v for k, v in word_counter.items() if v > 1}  # duplicated words
@@ -162,7 +162,8 @@ def deduplicate_keywords(word2vec_model, expanded_words, seed_words):
             dimension_seed_words = [
                 word
                 for word in seed_words[dimension]
-                if word in word2vec_model.wv.key_to_index
+                # NB: change in genesim 3 to 4. Solution: If key index returns None, then the word is not in the model
+                if word in word2vec_model.wv.key_to_index.keys()
             ]
             # sim_w_dim[dimension] = max([word2vec_model.wv.n_similarity([word], [x]) for x in seed_words[dimension]] )
             sim_w_dim[dimension] = word2vec_model.wv.n_similarity(
@@ -179,14 +180,14 @@ def deduplicate_keywords(word2vec_model, expanded_words, seed_words):
 
 def score_one_document_tf(document, expanded_words, list_of_list=False):
     """score a single document using term freq, the dimensions are sorted alphabetically
-    
+
     Arguments:
         document {str} -- a document
         expanded_words {dict[str, set(str)]} -- an expanded dictionary
-    
+
     Keyword Arguments:
         list_of_list {bool} -- whether the document is splitted (default: {False})
-    
+
     Returns:
         [int] -- a list of : dim1, dim2, ... , document_length
     """
@@ -209,15 +210,15 @@ def score_one_document_tf(document, expanded_words, list_of_list=False):
 
 def score_tf(documents, document_ids, expanded_words, n_core=1):
     """score using term freq for documents, the dimensions are sorted alphabetically
-    
+
     Arguments:
         documents {[str]} -- list of documents
         document_ids {[str]} -- list of document IDs
         expanded_words {dict[str, set(str)]} -- dictionary for scoring
-    
+
     Keyword Arguments:
         n_core {int} -- number of CPU cores (default: {1})
-    
+
     Returns:
         pandas.DataFrame -- a dataframe with columns: Doc_ID, dim1, dim2, ..., document_length
     """
@@ -261,17 +262,17 @@ def score_tf_idf(
         N_doc {int} -- number of documents
 
     Keyword Arguments:
-        method {str} -- 
-            TFIDF: conventional tf-idf 
+        method {str} --
+            TFIDF: conventional tf-idf
             WFIDF: use wf-idf log(1+count) instead of tf in the numerator
-            TFIDF/WFIDF+SIMWEIGHT: using additional word weights given by the word_weights dict 
+            TFIDF/WFIDF+SIMWEIGHT: using additional word weights given by the word_weights dict
             (default: {TFIDF})
         normalize {bool} -- normalized the L2 norm to one for each document (default: {False})
         word_weights {{word:weight}} -- a dictionary of word weights (e.g. similarity weights) (default: None)
 
     Returns:
         [df] -- a dataframe with columns: Doc_ID, dim1, dim2, ..., document_length
-        [contribution] -- a dict of total contribution (sum of scores in the corpus) for each word 
+        [contribution] -- a dict of total contribution (sum of scores in the corpus) for each word
     """
     print("Scoring using {}".format(method))
     contribution = defaultdict(int)
@@ -332,10 +333,10 @@ def compute_word_sim_weights(file_name):
     """Compute word weights in each dimension.
     Default weight is 1/ln(1+rank). For example, 1st word in each dim has weight 1.44,
     10th word has weight 0.41, 100th word has weigh 0.21.
-    
+
     Arguments:
         file_name {str} -- expanded dictionary file
-    
+
     Returns:
         sim_weights {{word:weight}} -- a dictionary of word weights
     """
