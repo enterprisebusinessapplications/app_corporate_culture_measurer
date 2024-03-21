@@ -8,7 +8,7 @@ from multiprocessing import Pool, freeze_support
 from pathlib import Path
 
 import gensim
-import global_options
+import app_corporate_culture_measurer.global_options as global_options
 import tqdm
 from gensim import models
 

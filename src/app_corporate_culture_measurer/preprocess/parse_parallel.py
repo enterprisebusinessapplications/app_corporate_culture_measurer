@@ -9,7 +9,7 @@ from pathlib import Path
 
 from stanfordnlp.server import CoreNLPClient
 
-import global_options
+import global_options as global_options
 from culture import file_util, preprocess_parallel
 
 
