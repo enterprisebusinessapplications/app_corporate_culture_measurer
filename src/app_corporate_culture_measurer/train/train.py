@@ -13,13 +13,14 @@ from train import culture_models
 
 def train():
     # train and apply a phrase model to detect 2-word phrases ----------------
+    
     culture_models.train_ngram_model(
         input_path=Path(
             global_options.DATA_FOLDER, "processed", "unigram", "documents.txt"
         ),
         model_path=Path(global_options.MODEL_FOLDER, "phrases", "bigram.mod"),
     )
-    culture_models.file_bigramer(
+    culture_models.apply_ngram_model(
         input_path=Path(
             global_options.DATA_FOLDER, "processed", "unigram", "documents.txt"
         ),
@@ -38,7 +39,7 @@ def train():
         ),
         model_path=Path(global_options.MODEL_FOLDER, "phrases", "trigram.mod"),
     )
-    culture_models.file_bigramer(
+    culture_models.apply_ngram_model(
         input_path=Path(
             global_options.DATA_FOLDER, "processed", "bigram", "documents.txt"
         ),
