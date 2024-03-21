@@ -1,10 +1,7 @@
 import sys
 
 sys.path.append("..")
-import concurrent.futures
 import datetime
-from functools import partial
-from multiprocessing import Pool, freeze_support
 from pathlib import Path
 
 import gensim
@@ -16,12 +13,12 @@ from culture import file_util
 
 
 def train_ngram_model(input_path, model_path):
-    """ Train a phrase model and save it to the disk. 
-    
+    """Train a phrase model and save it to the disk.
+
     Arguments:
         input_path {str or Path} -- input corpus
         model_path {str or Path} -- where to save the trained phrase model?
-    
+
     Returns:
         gensim.models.phrases.Phrases -- the trained phrase model
     """
@@ -43,18 +40,19 @@ def train_ngram_model(input_path, model_path):
     return bigram_model
 
 
-def bigram_transform(line, bigram_phraser):
-    """ Helper file fore apply_ngram_model
-    Note: Needs a phraser object or phrase model.
+def apply_ngram_model(
+    input_path, output_path, model_path, threshold=None, scoring=None
+):
+    def bigram_transform(line, bigram_phraser):
+        """Helper file fore apply_ngram_model
+        Note: Needs a phraser object or phrase model.
 
-    Arguments:
-        line {str}: a line 
-        return: a line with phrases joined using "_"
-    """
-    return " ".join(bigram_phraser[line.split()])
+        Arguments:
+            line {str}: a line
+            return: a line with phrases joined using "_"
+        """
+        return " ".join(bigram_phraser[line.split()])
 
-
-def apply_ngram_model(input_path, output_path, model_path, threshold=None, scoring=None):
     """ Transform an input text file into a file with 2-word phrases. 
     Apply again to learn 3-word phrases. 
 
@@ -79,12 +77,12 @@ def apply_ngram_model(input_path, output_path, model_path, threshold=None, scori
 
 
 def train_w2v_model(input_path, model_path, *args, **kwargs):
-    """ Train a word2vec model using the LineSentence file in input_path, 
+    """Train a word2vec model using the LineSentence file in input_path,
     save the model to model_path.count
-    
+
     Arguments:
         input_path {str} -- Corpus for training, each line is a sentence
-        model_path {str} -- Where to save the model? 
+        model_path {str} -- Where to save the model?
     """
     Path(model_path).parent.mkdir(parents=True, exist_ok=True)
     corpus_confcall = gensim.models.word2vec.PathLineSentences(
