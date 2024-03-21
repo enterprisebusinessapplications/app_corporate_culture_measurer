@@ -5,14 +5,19 @@ from train import culture_models
 
 
 def train():
+
+    def train_ngram_model(input_path, model_path):
+        culture_models.train_ngram_model(input_path, model_path)
+
     logging.log(logging.INFO, "training bigram model from corpus")
-    culture_models.train_ngram_model(
+    train_ngram_model(
         input_path=Path(
             global_options.DATA_FOLDER, "processed", "unigram", "documents.txt"
         ),
         model_path=Path(global_options.MODEL_FOLDER, "phrases", "bigram.mod"),
     )
     logging.log(logging.INFO, "completed training bigram model from corpus")
+
     culture_models.apply_ngram_model(
         input_path=Path(
             global_options.DATA_FOLDER, "processed", "unigram", "documents.txt"
@@ -26,12 +31,13 @@ def train():
     )
 
     logging.log(logging.INFO, "training trigram model from bigrammed corpus")
-    culture_models.train_ngram_model(
+    train_ngram_model(
         input_path=Path(
             global_options.DATA_FOLDER, "processed", "bigram", "documents.txt"
         ),
         model_path=Path(global_options.MODEL_FOLDER, "phrases", "trigram.mod"),
     )
+    
     culture_models.apply_ngram_model(
         input_path=Path(
             global_options.DATA_FOLDER, "processed", "bigram", "documents.txt"
