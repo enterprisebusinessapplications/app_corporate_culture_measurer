@@ -9,7 +9,7 @@ import pandas as pd
 from tqdm.auto import tqdm
 
 import app_corporate_culture_measurer.global_options as global_options
-import score
+import app_corporate_culture_measurer.core.score as score
 from culture import culture_dictionary
 
 

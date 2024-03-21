@@ -1,14 +1,11 @@
-import itertools
-import os
 import pickle
 from collections import defaultdict
-from operator import itemgetter
 from pathlib import Path
 
 import pandas as pd
 from tqdm import tqdm as tqdm
 
-import app_corporate_culture_measurer.global_options as global_options
+import global_options as global_options
 from culture import culture_dictionary, file_util
 
 # @TODO: The scoring functions are not memory friendly. The entire pocessed corpus needs to fit in the RAM. Rewrite a memory friendly version.
@@ -16,12 +13,12 @@ from culture import culture_dictionary, file_util
 
 def construct_doc_level_corpus(sent_corpus_file, sent_id_file):
     """Construct document level corpus from sentence level corpus and write to disk.
-    Dump "corpus_doc_level.pickle" and "doc_ids.pickle" to Path(global_options.OUTPUT_FOLDER, "scores", "temp"). 
-    
+    Dump "corpus_doc_level.pickle" and "doc_ids.pickle" to Path(global_options.OUTPUT_FOLDER, "scores", "temp").
+
     Arguments:
         sent_corpus_file {str or Path} -- The sentence corpus after parsing and cleaning, each line is a sentence
         sent_id_file {str or Path} -- The sentence ID file, each line correspond to a line in the sent_co(docID_sentenceID)
-    
+
     Returns:
         [str], [str], int -- a tuple of a list of documents, a list of document IDs, and the number of documents
     """
@@ -55,10 +52,10 @@ def construct_doc_level_corpus(sent_corpus_file, sent_id_file):
 
 def calculate_df(corpus):
     """Calcualte and dump a document-freq dict for all the words.
-    
+
     Arguments:
         corpus {[str]} -- a list of documents
-    
+
     Returns:
         {dict[str: int]} -- document freq for each word
     """
@@ -80,7 +77,7 @@ def calculate_df(corpus):
 
 def load_doc_level_corpus():
     """load the corpus constructed by construct_doc_level_corpus()
-    
+
     Returns:
         [str], [str], int -- a tuple of a list of documents, a list of document IDs, and the number of documents
     """
@@ -101,7 +98,7 @@ def load_doc_level_corpus():
 
 def score_tf(documents, doc_ids, expanded_dict):
     """
-    Score documents using term freq. 
+    Score documents using term freq.
     """
     print("Scoring using Term-freq (tf).")
     score = culture_dictionary.score_tf(
@@ -117,13 +114,13 @@ def score_tf(documents, doc_ids, expanded_dict):
 
 def score_tf_idf(documents, doc_ids, N_doc, method, expanded_dict, **kwargs):
     """Score documents using tf-idf and its variations
-    
+
     Arguments:
         documents {[str]} -- list of documents
         doc_ids {[str]} -- list of document IDs
         N_doc {int} -- number of documents
-        method {str} -- 
-            TFIDF: conventional tf-idf 
+        method {str} --
+            TFIDF: conventional tf-idf
             WFIDF: use wf-idf log(1+count) instead of tf in the numerator
             TFIDF/WFIDF+SIMWEIGHT: using additional word weights given by the word_weights dict
         expanded_dict {dict[str, set(str)]} -- expanded dictionary
@@ -169,7 +166,7 @@ def score_tf_idf(documents, doc_ids, N_doc, method, expanded_dict, **kwargs):
         )
 
 
-if __name__ == "__main__":
+def score():
     current_dict_path = str(
         str(Path(global_options.OUTPUT_FOLDER, "dict", "expanded_dict.csv"))
     )
