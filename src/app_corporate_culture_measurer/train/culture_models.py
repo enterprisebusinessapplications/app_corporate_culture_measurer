@@ -12,10 +12,10 @@ import global_options as global_options
 import tqdm
 from gensim import models
 
-from . import file_util
+from culture import file_util
 
 
-def train_bigram_model(input_path, model_path):
+def train_ngram_model(input_path, model_path):
     """ Train a phrase model and save it to the disk. 
     
     Arguments:
@@ -44,7 +44,7 @@ def train_bigram_model(input_path, model_path):
 
 
 def bigram_transform(line, bigram_phraser):
-    """ Helper file fore file_bigramer
+    """ Helper file fore apply_ngram_model
     Note: Needs a phraser object or phrase model.
 
     Arguments:
@@ -54,7 +54,7 @@ def bigram_transform(line, bigram_phraser):
     return " ".join(bigram_phraser[line.split()])
 
 
-def file_bigramer(input_path, output_path, model_path, threshold=None, scoring=None):
+def apply_ngram_model(input_path, output_path, model_path, threshold=None, scoring=None):
     """ Transform an input text file into a file with 2-word phrases. 
     Apply again to learn 3-word phrases. 
 

@@ -1,7 +1,6 @@
 echo "Starting up the sytem."
 cd ./src/app_corporate_culture_measurer/
-echo "parse"
-    python app_corporate_culture_measurer.py
+python app_corporate_culture_measurer.py
 echo "done"
 
 # echo "clean and train"
