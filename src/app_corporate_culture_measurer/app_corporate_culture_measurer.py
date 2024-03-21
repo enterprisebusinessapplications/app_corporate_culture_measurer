@@ -6,15 +6,20 @@ from pathlib import Path
 from preprocess.parse import sequential_parse
 from preprocess.clean import clean_file
 from train.train import train
+from core.create_dictionary import create_culture_dictionary
 import global_options
 
 # from train.train import sequential_parse
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
 if __name__ == "__main__":
-    preprocess = False
-    if(preprocess):
+    reparse = False
+    reclean = False
+    retrain = False
+
+    if reparse:
         sequential_parse()
+    if reclean:
         # clean the parsed text (remove POS tags, stopwords, etc.) ----------------
         clean_file(
             in_file=Path(
@@ -24,5 +29,8 @@ if __name__ == "__main__":
                 global_options.DATA_FOLDER, "processed", "unigram", "documents.txt"
             ),
         )
-    train()
+    if retrain:
+        train()
+
+    create_culture_dictionary()
 # ...
