@@ -12,7 +12,7 @@ import global_options as global_options
 import tqdm
 from gensim import models
 
-from . import file_util
+from culture import file_util
 
 
 def train_bigram_model(input_path, model_path):

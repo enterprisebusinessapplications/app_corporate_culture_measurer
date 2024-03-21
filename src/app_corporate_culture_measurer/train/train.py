@@ -8,7 +8,7 @@ import pandas as pd
 
 import global_options as global_options
 import preprocess.parse as parse
-from culture import culture_models
+from train import culture_models
 
 
 def train():
