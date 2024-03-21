@@ -23,6 +23,7 @@ def train():
     )
     logging.log(logging.INFO, "completed training bigram model from corpus")
 
+    logging.log(logging.INFO, "applying bigram model to corpus to produce a bigrammed corpus")
     apply_ngram_model(
         input_path=Path(
             global_options.DATA_FOLDER, "processed", "unigram", "documents.txt"
@@ -34,6 +35,9 @@ def train():
         scoring="original_scorer",
         threshold=global_options.PHRASE_THRESHOLD,
     )
+    logging.log(
+        logging.INFO, "completed applying bigram model to corpus to produce a bigrammed corpus"
+    )
 
     logging.log(logging.INFO, "training trigram model from bigrammed corpus")
     train_ngram_model(
@@ -42,7 +46,11 @@ def train():
         ),
         model_path=Path(global_options.MODEL_FOLDER, "phrases", "trigram.mod"),
     )
+    logging.log(logging.INFO, "completed training trigram model from bigrammed corpus")
 
+    logging.log(
+        logging.INFO, "applying trigram model to corpus to produce a trigrammed corpus"
+    )
     apply_ngram_model(
         input_path=Path(
             global_options.DATA_FOLDER, "processed", "bigram", "documents.txt"
@@ -54,7 +62,10 @@ def train():
         scoring="original_scorer",
         threshold=global_options.PHRASE_THRESHOLD,
     )
-    logging.log(logging.INFO, "completed training trigram model from bigrammed corpus")
+    logging.log(
+        logging.INFO,
+        "completed applying trigram model to corpus to produce a trigrammed corpus",
+    )
 
     logging.log(logging.INFO, "training trigram w2v model from trigrammed corpus")
     culture_models.train_w2v_model(
