@@ -8,6 +8,7 @@ from preprocess.clean import clean_file
 from train.train import train
 from core.create_dictionary import create_culture_dictionary
 from core.score import score
+from core.firms.firms import aggregate_scores
 
 import global_options
 
@@ -19,6 +20,7 @@ if __name__ == "__main__":
     reclean = False
     retrain = False
     regenerate_dictionary = False
+    aggregate_firm_scores = False
 
     if reparse:
         sequential_parse()
@@ -38,4 +40,8 @@ if __name__ == "__main__":
         create_culture_dictionary()
 
     score()
+
+    if aggregate_firm_scores:
+        aggregate_scores()
+
 # ...
