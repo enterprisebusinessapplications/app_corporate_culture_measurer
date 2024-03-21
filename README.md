@@ -61,8 +61,7 @@ objectives:
 
 ## setup instructions:
 1. install `python 3.11` or lower.
-    - [Python Download]: (https://www.python.org/downloads/)
-
+    - [Python Download](https://www.python.org/downloads/)
 2. clone repo: 
     ```shell
     git clone git@github.com:praisetompane/app_corporate_culture_measurer.git
@@ -109,17 +108,16 @@ objectives:
     ```shell
    
     ```
-    ![end to end curl example](./docs/end_to_end_curl_example.png) <br>
+    ![end to end curl example] <br>
 
-- If Postman requests can be found in `/utilities/postman/app_corporate_culture_measurer.postman_collection.json`.
-    ![end to end postman example](./docs/end_to_end_postman_example.png)
+- If Postman requests can be found in `/utilities/postman/app_corporate_culture_measurer.postman_collection.json`. <br>
     - Guide for how to import into Postman: https://learning.postman.com/docs/getting-started/importing-and-exporting/importing-data/
 
 
 ## development:
 - to run system in debug mode:
     ```shell
-    
+        ./start_system_development.sh
     ```
 - running in VSCode:
     - open the "Run and Debug" view:

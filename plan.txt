@@ -1,6 +1,10 @@
 - create project structure * 
 - create main app.py that implements what run.sh is doing
+<<<<<<< HEAD
     - python parse.py
+=======
+    - python parse.py *
+>>>>>>> 300580f (refactor(parse): embed sequential parse step into a main application and execute it from there)
     - python clean_and_train.py
     - python create_dict.py
     - python score.py
@@ -15,6 +19,10 @@
 - build Flask REST endpoints to expose interfaces
 
 
+<<<<<<< HEAD
 Legeng:
+=======
+Legend:
+>>>>>>> 300580f (refactor(parse): embed sequential parse step into a main application and execute it from there)
     *: first pass
     **: completed
