@@ -9,6 +9,11 @@ def train():
     def train_ngram_model(input_path, model_path):
         culture_models.train_ngram_model(input_path, model_path)
 
+    def apply_ngram_model(input_path, output_path, model_path, threshold, scoring):
+        culture_models.apply_ngram_model(
+            input_path, output_path, model_path, threshold, scoring
+        )
+
     logging.log(logging.INFO, "training bigram model from corpus")
     train_ngram_model(
         input_path=Path(
@@ -18,7 +23,7 @@ def train():
     )
     logging.log(logging.INFO, "completed training bigram model from corpus")
 
-    culture_models.apply_ngram_model(
+    apply_ngram_model(
         input_path=Path(
             global_options.DATA_FOLDER, "processed", "unigram", "documents.txt"
         ),
@@ -37,8 +42,8 @@ def train():
         ),
         model_path=Path(global_options.MODEL_FOLDER, "phrases", "trigram.mod"),
     )
-    
-    culture_models.apply_ngram_model(
+
+    apply_ngram_model(
         input_path=Path(
             global_options.DATA_FOLDER, "processed", "bigram", "documents.txt"
         ),
