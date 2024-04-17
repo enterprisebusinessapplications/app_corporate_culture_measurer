@@ -104,35 +104,23 @@ def process_largefile(
                     f_out.write(output_line_ids)
 
 
-def sequential_parse():
-    with CoreNLPClient(
-        properties={
-            "ner.applyFineGrained": "false",
-            "annotators": "tokenize, ssplit, pos, lemma, ner, depparse",
-        },
-        memory=global_options.RAM_CORENLP,
-        threads=global_options.N_CORES,
-        timeout=12000000,
-        max_char_length=1000000,
-    ) as client:
-        corpus_preprocessor = preprocess.preprocessor(client)
-        in_file = Path(global_options.DATA_FOLDER, "input_for_test", "documents.txt")
-        in_file_index = file_util.file_to_list(
-            Path(global_options.DATA_FOLDER, "input_for_test", "document_ids.txt")
-        )
-        out_file = Path(
-            global_options.DATA_FOLDER, "processed", "parsed", "documents.txt"
-        )
-        output_index_file = Path(
-            global_options.DATA_FOLDER, "processed", "parsed", "document_sent_ids.txt"
-        )
-        process_largefile(
-            input_file=in_file,
-            output_file=out_file,
-            input_file_ids=in_file_index,
-            output_index_file=output_index_file,
-            function_name=partial(
-                process_line, corpus_preprocessor
-            ),  # NB: I am using a Partial function for now! I will remove later with an OO design
-            chunk_size=global_options.PARSE_CHUNK_SIZE,
-        )
+def sequential_parse(client: CoreNLPClient):
+    corpus_preprocessor = preprocess.preprocessor(client)
+    in_file = Path(global_options.DATA_FOLDER, "input", "documents.txt")
+    in_file_index = file_util.file_to_list(
+        Path(global_options.DATA_FOLDER, "input", "document_ids.txt")
+    )
+    out_file = Path(global_options.DATA_FOLDER, "processed", "parsed", "documents.txt")
+    output_index_file = Path(
+        global_options.DATA_FOLDER, "processed", "parsed", "document_sent_ids.txt"
+    )
+    process_largefile(
+        input_file=in_file,
+        output_file=out_file,
+        input_file_ids=in_file_index,
+        output_index_file=output_index_file,
+        function_name=partial(
+            process_line, corpus_preprocessor
+        ),  # NB: I am using a Partial function for now! I will remove later with an OO design
+        chunk_size=global_options.PARSE_CHUNK_SIZE,
+    )

@@ -5,6 +5,7 @@ src/app_corporate_culture_measurer/data/processed
 src/app_corporate_culture_measurer/data/processed_backup
 src/app_corporate_culture_measurer/data/input_for_test/
 models/
+models_backup/
 outputs/
 *.props
 
