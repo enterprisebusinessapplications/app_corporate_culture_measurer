@@ -221,6 +221,7 @@ class text_cleaner(object):
 
 if __name__ == "__main__":
     # test if CoreNLP is set up correctly
+    # make this a test for the gateway.CoreNLPClient
     with CoreNLPClient(
         properties={
             "ner.applyFineGrained": "false",
